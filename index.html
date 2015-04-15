@@ -2,9 +2,14 @@
 <html>
 <head>
 <title>Mark Time</title>
+
+<!-- Bootstrap required files -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- Bootstrap required files -->
+
 <link rel="stylesheet" type="text/css" href="files/marktime.css">
 </head>
 <body>
@@ -13,24 +18,78 @@
 <h1 class="currenttime"><h1>
 <h3 class="randomquote"></h3>
 
-<!-- Sign In Button begins -->
+<!-- Sign In Button-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signInModal">
   Sign In </button>
 
-<!-- Sign In Button modal begins-->
+<!-- Sign In modal-->
 <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Sign Out</h4>
+        <h4 class="modal-title" id="myModalLabel">Sign In</h4>
       </div>
       <div class="modal-body">
-        ...
+
+        <!--Sign In Form-->
+        <div id="login">
+      	<form id="loginForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Company Email Address</label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" name="useremail" id="useremail"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Password</label>
+                        <div class="col-xs-5">
+                            <input type="password" class="form-control" name="password" id="password"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="submit" class="btn btn-primary" id="signin">Sign In</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+          <!--Sign In Form end-->
+
+          <!--Guest Sign In Form-->
+        <div id="guestlogin" style="display:none">
+      	<form id="guestloginForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Name</label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" name="guestname" id="guestname"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Email Address</label>
+                        <div class="col-xs-5">
+                            <input type="password" class="form-control" name="guestemail" id="guestemail"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="submit" class="btn btn-primary" id="guestsignin">Sign In</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+          <!--Guest Sign In Form end-->
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <p id="askguest">Don't have a company email address? <a href="#" id="guest">Sign In as a guest</a></p>
+        <p id="guestback"><a href="#">Back</a></p>
       </div>
     </div>
   </div>
@@ -38,11 +97,19 @@
 <!-- Sign In Button modal end -->
 <!-- Sign In Button end -->
 
-<!-- Sign Out Button begins-->
+<!-- Confirmation Modal-->
+
+
+
+
+<!-- Confirmation Modal end-->
+
+
+<!-- Sign Out Button-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signOutModal">
   Sign Out </button>
 
-<!-- Sign Out Button modal begins -->
+<!-- Sign Out Button modal-->
 <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,8 +121,8 @@
         ...
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Sign Out</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -64,8 +131,6 @@
 <!-- Sign Out Button ends -->
 
 <h5><span class="counter"></span>people have signed in today</h5>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="files/marktime.js"></script>
 </body>
 </html>
