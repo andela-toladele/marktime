@@ -111,13 +111,14 @@ document.getElementById('signin').onclick = function() {
 		}
 
 		else if (currentuser.status == "Present" && currentuser.latestStateChangeDay == mytime.getDate()) {
-				outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.latestStateChange + "</h2>";					//If user has been present today
+				outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.timein + "</h2>";					//If user has been present today
 			}
 
 			else {																		//First occurence of current user today
 			now = new Date();
-			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
+			currentuser.timein = now.getHours() + ":" + now.getMinutes();
 			currentuser.latestStateChangeDay = mytime.getDate();
+			currentuser.latestStateChange = currentuser.timein;
 			currentuser.status = "Present";
 			todaysRegister.push(currentuser);
 			updateCounter();
@@ -171,18 +172,19 @@ document.getElementById('guestsignin').onclick = function() {
 	}
 		checkPresence();
 	if (check == true) {
-		outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.latestStateChange + "</h2>";
+		outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.timein + "</h2>";
 	}
 
 	else {
 			now = new Date();
 			currentuser.type = "Guest";
 			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
+			currentuser.timein = currentuser.latestStateChange;
 			currentuser.latestStateChangeDay = mytime.getDate();
 			currentuser.status = "Present";
 			todaysRegister.push(currentuser);
 			updateCounter();
-			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.latestStateChange+ "</h2>";
+			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.timein + "</h2>";
 	}
 	document.getElementById("output").innerHTML = outputresult;
 
@@ -205,27 +207,29 @@ document.getElementById('guestsignin').onclick = function() {
 //Sign Out
 document.getElementById('signout').onclick = function() {
 	event.preventDefault();
-var outemail = document.getElementById('outemail').value;
-currentuser = {};
-currentuser.email = outemail;
-check = false;
-checkPresence();
-if (check == true) {
-		todaysRegister.splice(position, 1);
-		decreaseCounter();
-		outputresult = "<h2>Goodbye, " + currentuser.name + ". " + "You have successfully signed out.</h2>";
+	var outemail = document.getElementById('outemail').value;
+	currentuser = {};
+	currentuser.email = outemail;
+	check = false;
+	checkPresence();
+	if (check == true) {
+			now = new Date();
+			currentuser.status = "Absent";
+			currentuser.timeout = now.getHours() + ":" + now.getMinutes();
+			currentuser.latestStateChangeDay = mytime.getDate();
+			currentuser.latestStateChange = currentuser.timeout;
+			decreaseCounter();
+			outputresult = "<h2>Goodbye, " + currentuser.name + ". " + "You have successfully signed out.</h2>";
+			}
+		else {
+			outputresult = "<h2>Sorry, you have not signed in today. Please sign in and try again</h2>";
 		}
-	else {
-		outputresult = "<h2>Sorry, you have not signed in today. Please sign in and try again</h2>";
-	}
 
-	document.getElementById("output").innerHTML = outputresult;
+		document.getElementById("output").innerHTML = outputresult;
 
-//Show confirmation modal
-	$('#signOutModal').modal('hide');
-	$('#confirmModal').modal('show');
-
-
+	//Show confirmation modal
+		$('#signOutModal').modal('hide');
+		$('#confirmModal').modal('show');
 
 };
 
@@ -235,7 +239,10 @@ if (check == true) {
 document.getElementById('viewtoday').onclick = function() {
 		var register = "";
 		for (i=0;i<todaysRegister.length;i++) {
-			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].latestStateChange + "</td>"+ "</tr>";
+			if (todaysRegister[i].timeout == undefined) {
+				todaysRegister[i].timeout = "Present";
+			}
+			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr>";
 		} 
 		document.getElementById("todaysregister").innerHTML = "";     //Clear initial register
 		document.getElementById("todaysregister").innerHTML = register;
