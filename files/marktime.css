@@ -20,8 +20,34 @@ h2 {
 }
 
 
-table, #confirmModal {
+table, #confirmModal, #todaysdate2 {
   color: rgba(23,131,255,1);
+}
+
+::-webkit-input-placeholder {
+   color: white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: white;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: white;  
+}
+
+:-ms-input-placeholder {  
+   color: white;  
+}
+
+td, th {
+  text-align: center;
+}
+
+.form-control {
+  border: 1px solid rgb(216, 216, 216);
+  background-color: rgb(255, 255, 255, 0.97);
+  border-radius: 5px;
 }
 
 .modal-content{
@@ -34,6 +60,7 @@ table, #confirmModal {
 
 .modal-body {
   padding-bottom: 50px;
+  padding: 0 15px 15px 15px;
 }
 
 #slideout {
