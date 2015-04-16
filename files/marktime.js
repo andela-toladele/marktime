@@ -88,7 +88,8 @@ var ejiro = new user("Ejiro Winifred", "ejiro@andela.co", "ejiro", "080123456");
 var database = [jide,ejiro,musk];
 
 var outputresult;
-
+var outpass;
+var outemail;
 
 //User Sign In
 document.getElementById('signin').onclick = function() {
@@ -132,12 +133,6 @@ document.getElementById('signin').onclick = function() {
 	$('#signInModal').modal('hide');
 	$('#confirmModal').modal('show');
 
-//Go back to signin on error
-	document.getElementById('errorback').onclick = function() {
-		$('#confirmModal').modal('hide');
-		$('#signInModal').modal('show');
-	};
-
 };
 //End of onclick sign in button
 
@@ -149,6 +144,9 @@ var checkPresence = function () {
 				check = true;
 			}
 		}
+		if (outpass == currentuser.password) {
+			correctPass = true;
+			}
 		return check;
 	}
 
@@ -182,9 +180,10 @@ document.getElementById('guestsignin').onclick = function() {
 			currentuser.timein = currentuser.latestStateChange;
 			currentuser.latestStateChangeDay = mytime.getDate();
 			currentuser.status = "Present";
+			currentuser.password = Math.floor(Math.random() * 10000);
 			todaysRegister.push(currentuser);
 			updateCounter();
-			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.timein + "</h2>";
+			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.timein + "</br>Your passcode is <b>" + currentuser.password + "</b>. Please record this number as you will need it to sign out</h2>";
 	}
 	document.getElementById("output").innerHTML = outputresult;
 
@@ -207,12 +206,14 @@ document.getElementById('guestsignin').onclick = function() {
 //Sign Out
 document.getElementById('signout').onclick = function() {
 	event.preventDefault();
-	var outemail = document.getElementById('outemail').value;
+	outemail = document.getElementById('outemail').value;
+	outpass = document.getElementById('outpass').value;
 	currentuser = {};
 	currentuser.email = outemail;
 	check = false;
+	correctPass = false;
 	checkPresence();
-	if (check == true) {
+	if (check == true && correctPass == true) {
 			now = new Date();
 			currentuser.status = "Absent";
 			currentuser.timeout = now.getHours() + ":" + now.getMinutes();
@@ -221,8 +222,14 @@ document.getElementById('signout').onclick = function() {
 			decreaseCounter();
 			outputresult = "<h2>Goodbye, " + currentuser.name + ". " + "You have successfully signed out.</h2>";
 			}
+
+			else if (check == true &&  correctPass == false) {
+				outputresult = "<h2>Please input the correct password and try again</h2>"
+			}
+
+
 		else {
-			outputresult = "<h2>Sorry, you have not signed in today. Please sign in and try again</h2>";
+			outputresult = "<h2>Sorry, you have not signed in today. Please sign in before you sign out</h2>";
 		}
 
 		document.getElementById("output").innerHTML = outputresult;
@@ -236,13 +243,13 @@ document.getElementById('signout').onclick = function() {
 
 
 
-document.getElementById('viewtoday').onclick = function() {
-		var register = "";
+document.getElementById('viewregister').onclick = function() {
+		var register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
 		for (i=0;i<todaysRegister.length;i++) {
 			if (todaysRegister[i].timeout == undefined) {
 				todaysRegister[i].timeout = "Present";
 			}
-			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr>";
+			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
 		} 
 		document.getElementById("todaysregister").innerHTML = "";     //Clear initial register
 		document.getElementById("todaysregister").innerHTML = register;

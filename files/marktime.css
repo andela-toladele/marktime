@@ -1,0 +1,52 @@
+body {
+  height: 700px;
+  color: white;
+  text-align: center;
+ background: -moz-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ff3.6+ */
+background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(23,131,255,1)), color-stop(100%, rgba(0,255,255,0.5))); /* safari4+,chrome */
+background: -webkit-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* safari5.1+,chrome10+ */
+background: -o-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* opera 11.10+ */
+background: -ms-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ie10+ */
+background: linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* w3c */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#1783FF',GradientType=1 ); /* ie6-9 */
+}
+
+h1 {
+  font-size: 100px;
+}
+
+h2 {
+  font-size: 70px;
+}
+
+
+table, #confirmModal {
+  color: rgba(23,131,255,1);
+}
+
+.modal-content{
+  opacity: 0.97;
+}
+
+.modal-header {
+  border-bottom: 0;
+}
+
+.modal-body {
+  padding-bottom: 50px;
+}
+
+#slideout {
+  position: fixed;
+  width: 400px;
+  top: 40px;
+  left: 0;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+#slideout:active {
+  left: 250px;
+}
