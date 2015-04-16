@@ -1,5 +1,35 @@
-document.getElementById("companyname").innerHTML = "Andela"; //Set company name
-	now = new Date();
+//Set company name
+document.getElementById("companyname").innerHTML = "Andela"; 
+	mytime = new Date ();
+//Set the current date
+	weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	thisday = weekdays[mytime.getDay()];
+	thismonth = months[mytime.getMonth()];
+	today = thisday + ", "+ thismonth + " " + mytime.getDate() + ", " + mytime.getFullYear();
+	document.getElementById("todaysdate").innerHTML = today;
+
+//Currenttime
+
+var myVar = setInterval(function(){ myTimer() }, 1000);
+
+function myTimer() {
+    var d = new Date();
+    var t = d.toLocaleTimeString();
+    document.getElementById("currenttime").innerHTML = "<h1>" + t + "</h1>";
+}
+
+
+//count
+count = 0;
+var updateCounter = function () {
+	count++;
+	if (count==1) {
+		document.getElementById("counter").innerHTML = "<h4>" + count + " person has signed in today</h4>";
+	}
+	else
+document.getElementById("counter").innerHTML = "<h4>" + count + " people have signed in today</h4>";
+};
 
 document.getElementById('guest').onclick = function() {
 	document.getElementById('login').style.display = "none";
@@ -25,6 +55,10 @@ $('#signInModal').on('hidden.bs.modal', function (e) {
 });
 
 
+//An array for today's signers
+var todaysRegister = [];
+
+
 //Class of one user
 function user (name,email,password,phone) {
 	this.name = name;
@@ -33,6 +67,7 @@ function user (name,email,password,phone) {
 	this.phone = phone;
 }
 
+//List of users
 var jide = new user("Jide Banks", "jide@andela.co", "jide", "080123456");
 var musk = new user("Mr. Musk", "musk@andela.co", "musk", "080123456");
 var ejiro = new user("Ejiro Winifred", "ejiro@andela.co", "ejiro", "080123456");
@@ -41,33 +76,47 @@ var ejiro = new user("Ejiro Winifred", "ejiro@andela.co", "ejiro", "080123456");
 //An array for everybody
 var database = [jide,ejiro,musk];
 
+var outputresult;
+
+
+//User Sign In
 document.getElementById('signin').onclick = function() {
 	event.preventDefault();
 	var useremail = document.getElementById('useremail').value;
 	var password = document.getElementById('password').value;
-	var username;
-	var output;
-//Search for the correcr username and password
+	var currentuser = null ;
+
+//Search for the currect user's data
 	for (i=0;i<database.length;i++) {
 		if (useremail == database[i].email && password == database[i].password) {
 			currentuser = database[i];
-			username = currentuser.name;
-			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
-			currentuser.status = "Present";
-
 		}
 	}
 
-	if (username == null) {
-		document.getElementById("output").innerHTML = "<h2>Sorry, user not found. Please try again or sign in as a guest</h2>";
-	}
+//Function to get the right response
+	var getOutput = function () {
+		if (currentuser == null) {
+			outputresult = "<h2>Sorry, user not found. Please try again or sign in as a guest</h2>";  //If user could not be found
+		}
 
-	else {
-		var yourtime = currentuser.latestStateChange;
-		document.getElementById("output").innerHTML = "<h1> Welcome "+ username +"</h1><h2> You signed in at " + yourtime+ "</h2>";
-	}
+		else if (currentuser.status == "Present" && currentuser.latestStateChangeDay == mytime.getDate()) {
+				outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.latestStateChange + "</h2>";					//If user has been present today
+			}
 
-//Show confirmation modal
+			else {																		//First occurence of current user today
+			now = new Date();
+			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
+			currentuser.latestStateChangeDay = mytime.getDate();
+			currentuser.status = "Present";
+			todaysRegister.push(currentuser);
+			updateCounter();
+			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.latestStateChange+ "</h2>";
+			}
+			return outputresult;
+	}
+		document.getElementById("output").innerHTML = getOutput();
+
+	//Show confirmation modal
 	$('#signInModal').modal('hide');
 	$('#confirmModal').modal('show');
 
@@ -77,10 +126,82 @@ document.getElementById('signin').onclick = function() {
 		$('#signInModal').modal('show');
 	};
 
-
 };
+//End of onclick sign in button
 
+var checkPresence = function () {
+		for (i=0;i<todaysRegister.length; i++) {
+			if (currentuser.email == todaysRegister[i].email) {
+				currentuser = todaysRegister[i];
+				check = true;
+			}
+		}
+		return check;
+	}
+
+
+
+
+//Guest Sign In
 document.getElementById('guestsignin').onclick = function() {
+	event.preventDefault();
+	check = false;
 	var guestname = document.getElementById('guestname').value;
 	var guestemail = document.getElementById('guestemail').value;
+	 currentuser = {};
+	if (guestname == "" || guestemail == "") {
+		document.getElementById("output").innerHTML = "<h2>Please input a valid name and email address</h2>";
+	}
+	
+	else {
+		currentuser.name = guestname;
+		currentuser.email = guestemail;
+	}
+		checkPresence();
+	if (check == true) {
+		outputresult = "<h2>Hello " + currentuser.name + ". " + "You already signed in at " + currentuser.latestStateChange + "</h2>";
+	}
+
+	else {
+			now = new Date();
+			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
+			currentuser.latestStateChangeDay = mytime.getDate();
+			currentuser.status = "Present";
+			todaysRegister.push(currentuser);
+			updateCounter();
+			outputresult = "<h1> Welcome "+ currentuser.name +"</h1><h2> You signed in at " + currentuser.latestStateChange+ "</h2>";
+	}
+	document.getElementById("output").innerHTML = outputresult;
+
+	//Show confirmation modal
+	$('#signInModal').modal('hide');
+	$('#confirmModal').modal('show');
+
+//Go back to guest signin on error
+	document.getElementById('errorback').onclick = function() {
+		$('#confirmModal').modal('hide');
+		$('#signInModal').modal('show');
+		document.getElementById('login').style.display = "none";
+	document.getElementById('guestlogin').style.display = "block";
+	document.getElementById('askguest').style.display = "none";
+	document.getElementById('guestback').style.display = "block";
+	};
 };
+
+
+
+
+document.getElementById('viewtoday').onclick = function() {
+		var register = "";
+		for (i=0;i<todaysRegister.length;i++) {
+			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].latestStateChange + "</td>"+ "</tr>";
+		} 
+		document.getElementById("todaysregister").innerHTML = "";     //Clear initial register
+		document.getElementById("todaysregister").innerHTML = register;
+	};
+
+
+
+
+
+

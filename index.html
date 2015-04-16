@@ -14,9 +14,9 @@
 </head>
 <body>
 <h1>Welcome to <span id="companyname"></span></h1>
-<h2> Today is <span class="todaysdate"></span></h2>
-<h1 class="currenttime"><h1>
-<h3 class="randomquote"></h3>
+<h2> Today is <span id="todaysdate"></span></h2>
+<div id="currenttime"></div>
+<h3 id="randomquote"></h3>
 
 <!-- Sign In Button-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signInModal">
@@ -72,7 +72,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Email Address</label>
                         <div class="col-xs-5">
-                            <input type="password" class="form-control" name="guestemail" id="guestemail"/>
+                            <input type="text" class="form-control" name="guestemail" id="guestemail"/>
                         </div>
                     </div>
 
@@ -142,7 +142,10 @@
 <!-- Sign Out Button modal ends -->
 <!-- Sign Out Button ends -->
 
-<h5><span class="counter"></span>people have signed in today</h5>
+<div id="counter"></div>
+<p> <a href="#" id="viewtoday">View Register</a></p>
+<table style="width:100%" id="todaysregister"></table>
+
 <script type="text/javascript" src="files/marktime.js"></script>
 </body>
 </html>
