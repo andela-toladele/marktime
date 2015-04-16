@@ -25,10 +25,20 @@ count = 0;
 var updateCounter = function () {
 	count++;
 	if (count==1) {
-		document.getElementById("counter").innerHTML = "<h4>" + count + " person has signed in today</h4>";
+		document.getElementById("counter").innerHTML = "<h4>" + count + " person currently signed in</h4>";
 	}
 	else
-document.getElementById("counter").innerHTML = "<h4>" + count + " people have signed in today</h4>";
+document.getElementById("counter").innerHTML = "<h4>" + count + " people currently signed in</h4>";
+};
+
+
+var decreaseCounter = function () {
+	count--;
+	if (count==1) {
+		document.getElementById("counter").innerHTML = "<h4>" + count + " person currently signed in</h4>";
+	}
+	else
+document.getElementById("counter").innerHTML = "<h4>" + count + " people currently signed in</h4>";
 };
 
 document.getElementById('guest').onclick = function() {
@@ -65,6 +75,7 @@ function user (name,email,password,phone) {
 	this.email = email;
 	this.password = password;
 	this.phone = phone;
+	this.type = "Employee";
 }
 
 //List of users
@@ -133,6 +144,7 @@ var checkPresence = function () {
 		for (i=0;i<todaysRegister.length; i++) {
 			if (currentuser.email == todaysRegister[i].email) {
 				currentuser = todaysRegister[i];
+				position = i;
 				check = true;
 			}
 		}
@@ -164,6 +176,7 @@ document.getElementById('guestsignin').onclick = function() {
 
 	else {
 			now = new Date();
+			currentuser.type = "Guest";
 			currentuser.latestStateChange = now.getHours() + ":" + now.getMinutes();
 			currentuser.latestStateChangeDay = mytime.getDate();
 			currentuser.status = "Present";
@@ -186,6 +199,34 @@ document.getElementById('guestsignin').onclick = function() {
 	document.getElementById('askguest').style.display = "none";
 	document.getElementById('guestback').style.display = "block";
 	};
+};
+
+
+//Sign Out
+document.getElementById('signout').onclick = function() {
+	event.preventDefault();
+var outemail = document.getElementById('outemail').value;
+currentuser = {};
+currentuser.email = outemail;
+check = false;
+checkPresence();
+if (check == true) {
+		todaysRegister.splice(position, 1);
+		decreaseCounter();
+		outputresult = "<h2>Goodbye, " + currentuser.name + ". " + "You have successfully signed out.</h2>";
+		}
+	else {
+		outputresult = "<h2>Sorry, you have not signed in today. Please sign in and try again</h2>";
+	}
+
+	document.getElementById("output").innerHTML = outputresult;
+
+//Show confirmation modal
+	$('#signOutModal').modal('hide');
+	$('#confirmModal').modal('show');
+
+
+
 };
 
 
