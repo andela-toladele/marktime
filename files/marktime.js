@@ -56,8 +56,9 @@ var showCount = function () {
   else if (isNaN(count)) {
     document.getElementById("counter").innerHTML = "";
   }
-  else 
+  else {
     document.getElementById("counter").innerHTML = "<h4>" + count + " people are currently signed in</h4>";
+  }
 };
 showCount();
 
@@ -112,7 +113,9 @@ if (getFromStorage()[2] == null) {
   database = [jide,ejiro,musk];
 }
 
-else database = [jide,ejiro,musk];
+else {
+  database = [jide,ejiro,musk];
+}
 
 //My variables
 var outputresult;
@@ -249,7 +252,9 @@ document.getElementById('signin').onclick = function() {
           document.getElementById("output").innerHTML = outputresult;
           $('#confirmModal').modal('show');
           }
-          else wrongInfoError();
+          else {
+            wrongInfoError();
+          }
 				}
 
 				else {
@@ -262,7 +267,9 @@ document.getElementById('signin').onclick = function() {
   		}
 		}
 
-    else  emptyError(); 
+    else {
+      emptyError();
+    }
 
 		$('#confirmModal').modal('show');
 };
@@ -293,7 +300,9 @@ document.getElementById('signout').onclick = function() {
       }
     }
 
-    else  emptyError(); 
+    else {
+      emptyError();
+    }
 
     $('#confirmModal').modal('show');
 };
@@ -317,7 +326,9 @@ document.getElementById('guestsignin').onclick = function() {
 			$('#confirmModal').modal('show');
 		}  
 	}
-  else  emptyError(); 
+  else {
+    emptyError();
+  }
 };
 
 //Guest Sign out
@@ -353,7 +364,9 @@ document.getElementById('guestsignout').onclick = function() {
       $('#confirmModal').modal('show');
     }  
   }
-  else  emptyError(); 
+  else {
+    emptyError();
+  }
 };
 
 
