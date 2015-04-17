@@ -1,4 +1,3 @@
-window.onload = function() {
 //Current date
 mytime = new Date ();
 
@@ -21,9 +20,6 @@ function myTimer() {
   var t = d.toLocaleTimeString();
   document.getElementById("currenttime").innerHTML = "<h1>" + t + "</h1>";
 }
-
-};
-
 
 //Set company name
 document.getElementById("companyname").innerHTML = "Andela";
