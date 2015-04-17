@@ -129,7 +129,7 @@ var username;
 var useremail;
 var todaysname;
 var allDays = new Object();
-var register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
+var register;
 var timein = [];
 var timeout = [];
 
@@ -417,7 +417,7 @@ document.getElementById('guestsignout').onclick = function() {
 
 //Populate register
 var displayRegister = function () {
-  register = "";
+  register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
   for (i=0;i<todaysRegister.length;i++) {
     if (todaysRegister[i].timeout == undefined) {
       todaysRegister[i].timeout = "Present";
