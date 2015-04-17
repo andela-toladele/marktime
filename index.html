@@ -1,159 +1,221 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Mark Time</title>
+  <head>
+    <title>Mark Time</title>
 
-<!-- Bootstrap required files -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- Bootstrap required files -->
-
-<link rel="stylesheet" type="text/css" href="files/marktime.css">
-</head>
-<body>
+    <!-- Bootstrap required files -->
+    <link rel="stylesheet" href="files/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Bootstrap required files -->
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="files/marktime.css">
+  </head>
+  <body>
   <!--Begin fluid container-->
   <div class ="container-fluid">
 
-<!--navbar->
-<nav role="navigation" class="navbar navbar-inverse">
-    <!-- Brand and toggle get grouped for better mobile display -->
+  <!--navbar-->
+  <nav>
     <div class="navbar-header">
-        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a href="http://github.com/eawinifred"  target="_blank" class="navbar-brand">MarkTime by Ejiro Winifred Ariaroo</a>
+      <a href="http://github.com/eawinifred"  target="_blank" class="navbar-brand">MarkTime by Ejiro Winifred Ariaroo</a>
     </div>
-    <!-- Collection of nav links, forms, and other content for toggling -->
+    <!--Nav links-->
     <div id="navbarCollapse" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Admin</a></li>
-            <li><a href="#" data-toggle="modal" data-target= "#todayModal" id="viewregister">View Register</a></li>
-        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target= "#adminModal" id="viewadmin">Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target= "#todayModal" id="viewregister">View Register</a></li>
+      </ul>
     </div>
-</nav>
-<!--Navbar-->
+  </nav>
+  <!--Navbar-->
+
+  <!--Homepage data-->
+  <img src="files/companyimage.png" style="width: 150px; height: 150px"/>
+  <h2 id="companyname"></h2>
+  <h3> Today is <span id="todaysdate"></span></h3>
+  <div id="currenttime"></div>
 
 
-<h2 id="companyname"></h2>
-<h3> Today is <span id="todaysdate"></span></h3>
-<div id="currenttime"></div>
-
-<div class="container">
-  <div class="col-md-6 col-md-offset-3" id="formdiv">
-   <!--Sign In Form-->
-        <div id="login">
-        <form id="loginForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-xs-3 col-xs-offset-2">
-                            <input type="text" class="form-control" name="useremail" placeholder="you@andela.co" id="useremail"/>
-                        </div>
-                        <div class="col-xs-3">
-                            <input type="password" class="form-control" name="password" placeholder="Passcode" id="password"/>
-                        </div>
-                        <div class="col-xs-3">
-                            <button type="submit" class="btn btn-primary" id="signin">Sign In</button>
-                        </div>
-                    </div>
-                </form>
-              </div>
-          <!--Sign In Form end-->
-
-
-          <!--Guest Sign In Form-->
-        <div id="guestlogin" style="display:none">
-      	<form id="guestloginForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-xs-5">
-                            <input type="text" class="form-control" name="guestname" placeholder="Your Name" id="guestname"/>
-                        </div>
-                        <div class="col-xs-5">
-                            <input type="text" class="form-control" name="guestemail" placeholder="you@andela.co" id="guestemail"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-5 col-xs-offset-3">
-                            <button type="submit" class="btn btn-primary" id="guestsignin">Sign In</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="guestback">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-              </div>
-          <!--Guest Sign In Form end-->
-
-        <p id="askguest">Don't have a company email address? <a href="#" id="guest">Sign In as a guest</a></p>
+  <!--Sign In Form-->
+  <div id ="login">
+    <form id="loginForm" method="post" class="form-inline">
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="useremail" placeholder="Company Email Address" id="useremail"/>
+        </div>
       </div>
+      <div class="form-group">
+        <div>
+          <input type="password" class="form-control" name="password" placeholder="Password" id="password"/>
+        </div>
       </div>
-      <!--Form Div end-->
-
-<!-- Confirmation Modal-->
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="form-group">
+        <div>
+          <button type="submit" class="btn btn-primary" id="signin">Mark Time</button>
+        </div>
       </div>
-      <div class="modal-body" id="output"></div>
-    </div>
+    </form>
   </div>
-</div>
-<!-- Confirmation Modal end-->
+  <!--Sign In Form end-->
 
-<!-- Guest Passcode Modal-->
-<div class="modal fade" id="passcodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+  <!--Guest Sign In Form-->
+  <div id="guestlogin" style="display:none">
+    <form id="guestloginForm" method="post" class="form-inline">
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="guestname" placeholder="Your Name" id="guestname"/>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="guestpassForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-xs-5">
-                            <input type="text" class="form-control" name="guestcode" placeholder="Passcode" id="guestcode"/>
-                        </div>
-                    </div>
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="guestemail" placeholder="Your Email Address" id="guestemail"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <button type="submit" class="btn btn-primary" id="guestsignin">Mark Time</button>
+        </div>
+      </div>
+      <div class="form-group">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="guestback">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!--Guest Sign In Form end-->
 
-                    <div class="form-group">
-                        <div class="col-xs-5 col-xs-offset-3">
-                            <button type="submit" class="btn btn-primary" id="guestcodeconfirm" data-target="#confirmModal" >Sign In</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="guestcodeback">Cancel</button>
-                        </div>
-                    </div>
-                </form>
+          <p id="askguest">Don't have a company email address? <a href="#" id="guest">Sign In as a guest</a></p>
+        </div>
+        </div>
+        <!--Form Div end-->
+
+  <!-- Confirmation Modal-->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body" id="output"></div>
       </div>
     </div>
   </div>
-</div>
-<!-- Confirmation Modal end-->
+  <!-- Confirmation Modal end-->
 
+  <!-- Guest Passcode Modal-->
+  <div class="modal fade" id="passcodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form id="guestpassForm" method="post" class="form-inline">
+                      <div class="form-group">
+                          <div>
+                              <input type="text" class="form-control" name="guestcode" placeholder="Passcode" id="guestcode"/>
+                          </div>
+                      </div>
 
-<div id="counter"></div>
-
-<!--View Register modal-->
-<div class="modal fade" id="todayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <div class="form-group">
+                          <div>
+                              <button type="submit" class="btn btn-primary" id="guestcodeconfirm" data-target="#confirmModal" >Mark Time</button>
+                              <button type="button" class="btn btn-default" data-dismiss="modal" id="guestcodeback">Cancel</button>
+                          </div>
+                      </div>
+                  </form>
+        </div>
       </div>
-      <div class="modal-body">
-      <h3><span id="todaysdate2"></span></h3>
-      <table class="table table-striped" id="todaysregister"></table>
-    </div>
     </div>
   </div>
-</div>
+  <!-- Confirmation Modal end-->
 
 
-</div>
-<!--End fluid container-->
-<script type="text/javascript" src="files/marktime.js"></script>
-</body>
+  <div id="counter"></div>
+
+  <!--View Register modal-->
+  <div class="modal fade" id="todayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <h3><span id="todaysdate2"></span></h3>
+        <table class="table table-striped" id="todaysregister"></table>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Admin modal -->
+  <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+      <ul id="adminlist">
+        <li><a href="#" id="add">Add Employee</a></li>
+        <li><a href="#"  id="remove">Remove Employee</a></li>
+        <li><a href="#" id="clear">Clear Today's Data</a></li>
+      </ul>
+
+        <div id="addemployee" style="display:none">
+    <form id="guestloginForm" method="post" class="form">
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="employeename" placeholder="Employee Name" id="employeename"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="employeeemail" placeholder="Employee Email" id="employeeemail"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="employeepass" placeholder="Employee Password" id="employeepass"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-primary" id="addnow">Add Employee</button>
+          <button type="button" class="btn btn-default" id="addback">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div id="removeemployee" style="display:none">
+    <form id="guestloginForm" method="post" class="form-inline">
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" name="employeeemailremove" placeholder="Employee Email Address" id="employeeemailremove"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-primary" id="removenow">Remove Employee</button>
+          <button type="button" class="btn btn-default" id="removeback">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+      </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!--End fluid container-->
+  <script type="text/javascript" src="files/marktime.js"></script>
+  </body>
 </html>

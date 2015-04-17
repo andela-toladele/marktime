@@ -2,52 +2,59 @@ body {
   height: 700px;
   color: white;
   text-align: center;
- background: -moz-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ff3.6+ */
-background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(23,131,255,1)), color-stop(100%, rgba(0,255,255,0.5))); /* safari4+,chrome */
-background: -webkit-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* safari5.1+,chrome10+ */
-background: -o-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* opera 11.10+ */
-background: -ms-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ie10+ */
-background: linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* w3c */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#1783FF',GradientType=1 ); /* ie6-9 */
+  background: -moz-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(23,131,255,1)), color-stop(100%, rgba(0,255,255,0.5))); /* safari4+,chrome */
+  background: -webkit-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* ie10+ */
+  background: linear-gradient(45deg, rgba(23,131,255,1) 0%, rgba(0,255,255,0.5) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#1783FF',GradientType=1 ); /* ie6-9 */
 }
+
 
 h1 {
   font-size: 100px;
+  font-family: 'Poiret One', sans-serif;
 }
 
 h2 {
   font-size: 70px;
+  font-family: 'Poiret One', cursive;
 }
-
 
 table, #confirmModal, #todaysdate2 {
   color: rgba(23,131,255,1);
-}
-
-::-webkit-input-placeholder {
-   color: white;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   color: white;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: white;  
-}
-
-:-ms-input-placeholder {  
-   color: white;  
 }
 
 td, th {
   text-align: center;
 }
 
+div#currenttime h1 {
+  color:white;
+}
+
+ul#adminlist {
+  display: inline;
+}
+
+ul#adminlist li {
+  padding: 10px;
+  font-size: 20px;
+  list-style-type: none;
+}
+
+#addemployee {
+  margin-bottom: 60px;
+}
+
 .form-control {
   border: 1px solid rgb(216, 216, 216);
-  background-color: rgb(255, 255, 255, 0.97);
   border-radius: 5px;
+}
+
+#askguest {
+  margin-top: 20px;
 }
 
 .modal-content{
