@@ -130,6 +130,8 @@ var useremail;
 var todaysname;
 var allDays = new Object();
 var register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
+var timein = [];
+var timeout = [];
 
 //Function for empty fields
 var emptyError = function () {
@@ -181,7 +183,23 @@ var wrongInfoError = function () {
 //Function to sign in
 var signIn = function (type) {
   now = new Date();
-  currentuser.timein = now.getHours() + ":" + now.getMinutes();
+  if (now.getHours() <10) {
+    timein[0] = "0" + now.getHours();
+  }
+
+  else {
+    timein[0] = now.getHours();
+  }
+
+  if (now.getMinutes() <10) {
+    timein[1] = "0" + now.getHours();
+  }
+
+  else {
+    timein[1] = now.getHours();
+  }
+
+  currentuser.timein = timein[0] + ":" + timein[1];
   currentuser.latestStateChangeDay = mytime.getDate();
   currentuser.latestStateChange = currentuser.timein;
   currentuser.status = "Present";
@@ -224,7 +242,24 @@ var signOut = function (type) {
 	checkPresence();
 	now = new Date();
 	currentuser.status = "Absent";
-  currentuser.timeout = now.getHours() + ":" + now.getMinutes();
+
+  if (now.getHours() <10) {
+    timeout[0] = "0" + now.getHours();
+  }
+
+  else {
+    timeout[0] = now.getHours();
+  }
+
+  if (now.getMinutes() <10) {
+    timeout[1] = "0" + now.getHours();
+  }
+
+  else {
+    timeout[1] = now.getHours();
+  }
+
+  currentuser.timeout = timeout[0] + ":" + timeout[1];
 	currentuser.latestStateChangeDay = mytime.getDate();
 	currentuser.latestStateChange = currentuser.timeout;
 	decreaseCounter();
