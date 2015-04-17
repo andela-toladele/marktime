@@ -1,19 +1,19 @@
 //Current date
-mytime = new Date ();
+var mytime = new Date ();
 
-weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-thisday = weekdays[mytime.getDay()];
-thismonth = months[mytime.getMonth()];
-today = thisday + ", "+ thismonth + " " + mytime.getDate() + ", " + mytime.getFullYear();
+var thisday = weekdays[mytime.getDay()];
+var thismonth = months[mytime.getMonth()];
+var today = thisday + ", "+ thismonth + " " + mytime.getDate() + ", " + mytime.getFullYear();
 document.getElementById("todaysdate").innerHTML = today;
 document.getElementById("todaysdate2").innerHTML = today;  //date in array
 
 
 //Current time
-var myVar = setInterval(function(){ myTimer() }, 1000);
+var myVar = setInterval(function(){ myTimer(); }, 1000);
 
 function myTimer() {
   var d = new Date();
