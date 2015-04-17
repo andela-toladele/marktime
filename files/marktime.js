@@ -47,6 +47,7 @@ var todaysRegister;
 //count on homepage
 var count = getFromStorage()[0] || 0;
 
+
 //Show on load
 var showCount = function () {
   if (count==1) {
@@ -106,7 +107,13 @@ var ejiro = new user("Ejiro Winifred", "ejiro@andela.co", "ejiro", "080123456");
 
 
 //An array for everybody
-var database = [jide,ejiro,musk];
+var database;
+
+if (getFromStorage()[2] == null) {
+  database = [jide,ejiro,musk];
+}
+
+else database = [jide,ejiro,musk];
 
 //My variables
 var outputresult;
@@ -119,8 +126,6 @@ var currentuser = {};
 var username;
 var useremail;
 var register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
-currentuser.usercount = -1;
-var times = [];
 
 //Function for empty fields
 var emptyError = function () {
@@ -131,7 +136,7 @@ var emptyError = function () {
 
 //Function to check today's register
 var checkPresence = function () {
-  newsignin = false;
+  check = false;
   todaysRegister = getFromStorage()[1] || [];
 	for (i=0;i<todaysRegister.length; i++) {
 		if (useremail == todaysRegister[i].email) {
@@ -139,12 +144,7 @@ var checkPresence = function () {
 			position = i;
 			check = true;
 		}
-	}
-
-  if (currentuser.status == "Absent") {
-    newsignin = true;
-  }
-
+}
 	if (outpass == currentuser.password) {
 		correctPass = true;
 	}
@@ -155,6 +155,10 @@ var checkPresence = function () {
 
 //Function to search for the currect user's data with email & password
 var checkDatabase = function () {
+  if (getFromStorage()[2] == null) {
+  database = [jide,ejiro,musk];
+}
+
 	for (i=0;i<database.length;i++) {
 		if (useremail == database[i].email && password == database[i].password) {
 			currentuser = database[i];
@@ -185,6 +189,7 @@ var signIn = function (type) {
 	else if (type == "guest") {
 		currentuser.name = username;
 		currentuser.email = useremail;
+    currentuser.type = "Guest";
 		currentuser.password = Math.floor(Math.random() * 10000);
     outputresult = "<h2> Welcome "+ currentuser.name +". </h2></br><h3> You signed in at " + currentuser.timein + "</br>Your passcode is <b>" + currentuser.password + "</b>. Please record this number as you will need it to sign out</h3>";
   }
@@ -217,7 +222,7 @@ var signOut = function (type) {
 	currentuser.status = "Absent";
   currentuser.timeout = now.getHours() + ":" + now.getMinutes();
 	currentuser.latestStateChangeDay = mytime.getDate();
-	currentuser.latestStateChange = currentuser.timeout[currentuser.timeout.length - 1];
+	currentuser.latestStateChange = currentuser.timeout;
 	decreaseCounter();
 	outputresult = "<h2>Goodbye, " + currentuser.name + ". " + "</h2></br><h3>You have successfully signed out.</h3>";
 
@@ -230,7 +235,6 @@ var signOut = function (type) {
 //User Sign in
 document.getElementById('signin').onclick = function() {
 	event.preventDefault();
-  signed = false;
 	useremail = document.getElementById('useremail').value;
 	password = document.getElementById('password').value;
 	currentuser = {};
@@ -238,8 +242,13 @@ document.getElementById('signin').onclick = function() {
 			checkDatabase();
 			if (currentuser.email != undefined) {
 				checkPresence(); 
-				if (check == true && newsignin == false) {
-					signOut("employee");
+				if (check == true) {
+          if (currentuser.password == password) {
+					outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
+          document.getElementById("output").innerHTML = outputresult;
+          $('#confirmModal').modal('show');
+          }
+          else wrongInfoError();
 				}
 
 				else {
@@ -258,6 +267,30 @@ document.getElementById('signin').onclick = function() {
 };
 
 
+document.getElementById('signout').onclick = function() {
+  event.preventDefault();
+  useremail = document.getElementById('useremail').value;
+  password = document.getElementById('password').value;
+  currentuser = {};
+    if (useremail != "" && password != "") {
+      checkDatabase();
+      if (currentuser.email != undefined) {
+        checkPresence(); 
+        if (check == true) {
+          signOut("employee");
+        }  
+      }
+
+      else {
+        wrongInfoError();
+      }
+    }
+
+    else  emptyError(); 
+
+    $('#confirmModal').modal('show');
+};
+
 
 //Guests
 document.getElementById('guestsignin').onclick = function() {
@@ -268,25 +301,11 @@ document.getElementById('guestsignin').onclick = function() {
   if (useremail != "" && password != "") {
 		checkPresence(); 
 		if (check == true) {
-			$('#passcodeModal').modal('show');
-			document.getElementById('guestcodeconfirm').onclick = function() {
-				event.preventDefault();
-				outpass = document.getElementById('guestcode').value;
-				if (outpass == currentuser.password) {
-					signOut("guest");
-					$('#passcodeModal').modal('hide');
-				  $('#confirmModal').modal('show');
-				}
-
-				else {
-					$('#passcodeModal').modal('hide');
-					wrongInfoError();
-					$('#confirmModal').modal('show');
-				}
-			}
-		}
-
-		else if (check == false) {
+          outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
+          document.getElementById("output").innerHTML = outputresult;
+          $('#confirmModal').modal('show');
+          }
+          else {
 			signIn("guest");
 			$('#confirmModal').modal('show');
 		}  
@@ -295,19 +314,51 @@ document.getElementById('guestsignin').onclick = function() {
 };
 
 
-//Populate register
-var displayRegister = function () {
-	for (i=0;i<todaysRegister.length;i++) {
-    var outtimes = todaysRegister[i].timeout;
-		if (todaysRegister[i].status == "Present") {
-			register = register + "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>Present</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
-		}
+document.getElementById('guestsignout').onclick = function() {
+  event.preventDefault();
+  username = document.getElementById('guestname').value;
+  useremail = document.getElementById('guestemail').value;
+  currentuser = {};
+  if (useremail != "" && password != "") {
+    checkPresence(); 
+    if (check == true) {
+      $('#passcodeModal').modal('show');
+      document.getElementById('guestcodeconfirm').onclick = function() {
+        event.preventDefault();
+        outpass = document.getElementById('guestcode').value;
+        if (outpass == currentuser.password) {
+          signOut("guest");
+          $('#passcodeModal').modal('hide');
+          $('#confirmModal').modal('show');
+        }
 
-    else if (todaysRegister[i].status == "Absent") {
-      register = register + "<tr  class='danger'>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + outtimes[todaysRegister[i].usercount] + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
+        else {
+          $('#passcodeModal').modal('hide');
+          wrongInfoError();
+          $('#confirmModal').modal('show');
+        }
+      }
     }
 
-	} 
+    else if (check == false) {
+      signIn("guest");
+      $('#confirmModal').modal('show');
+    }  
+  }
+  else  emptyError(); 
+};
+
+
+//Populate register
+var displayRegister = function () {
+      register = "";
+	for (i=0;i<todaysRegister.length;i++) {
+    if (todaysRegister[i].timeout == undefined) {
+      todaysRegister[i].timeout = "Present";
+    }
+      register += "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
+    }
+
 	document.getElementById("todaysregister").innerHTML = "";     //Clear initial register
 	document.getElementById("todaysregister").innerHTML = register;
 };
