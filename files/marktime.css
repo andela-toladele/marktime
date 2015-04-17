@@ -48,6 +48,10 @@ ul#adminlist li {
   margin-bottom: 60px;
 }
 
+.homecolor {
+  color: white;
+}
+
 .form-control {
   border: 1px solid rgb(216, 216, 216);
   border-radius: 5px;
