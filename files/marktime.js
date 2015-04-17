@@ -12,18 +12,6 @@ today = thisday + ", "+ thismonth + " " + mytime.getDate() + ", " + mytime.getFu
 document.getElementById("todaysdate").innerHTML = today;
 document.getElementById("todaysdate2").innerHTML = today;  //date in array
 
-var thishour = mytime.getHours();
-var thisminute = mytime.getMinutes();
-var thisdate = mytime.getDate() + "-" +  mytime.getMonth() + "-" + mytime.getYear();
-if (thishour == 11 && thisminute == 52) {
-    todaysname = thisdate;
-    console.log(todaysname);
-    allDays.todaysname = getFromStorage();
-    sessionStorage.clear();
-    console.log(allDays.todaysname);
-    window.location.reload(true);
-  }
-
 
 //Current time
 var myVar = setInterval(function(){ myTimer() }, 1000);
@@ -34,13 +22,11 @@ function myTimer() {
   document.getElementById("currenttime").innerHTML = "<h1>" + t + "</h1>";
 }
 
-
 };
 
 
-//Company name
+//Set company name
 document.getElementById("companyname").innerHTML = "Andela";
-
 
 
 //Function to save to storage
@@ -65,7 +51,7 @@ var todaysRegister;
 var count = getFromStorage()[0] || 0;
 
 
-//Show on load
+//Show count on load
 var showCount = function () {
   if (count==1) {
     document.getElementById("counter").innerHTML = "<h4>" + count + " person is currently signed in</h4>";
