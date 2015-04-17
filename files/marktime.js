@@ -192,11 +192,11 @@ var signIn = function (type) {
   }
 
   if (now.getMinutes() <10) {
-    timein[1] = "0" + now.getHours();
+    timein[1] = "0" + now.getMinutes();
   }
 
   else {
-    timein[1] = now.getHours();
+    timein[1] = now.getMinutes();
   }
 
   currentuser.timein = timein[0] + ":" + timein[1];
@@ -252,11 +252,11 @@ var signOut = function (type) {
   }
 
   if (now.getMinutes() <10) {
-    timeout[1] = "0" + now.getHours();
+    timeout[1] = "0" + now.getMinutes();
   }
 
   else {
-    timeout[1] = now.getHours();
+    timeout[1] = now.getMinutes();
   }
 
   currentuser.timeout = timeout[0] + ":" + timeout[1];
