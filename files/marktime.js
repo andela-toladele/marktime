@@ -284,6 +284,7 @@ document.getElementById('signin').onclick = function() {
 				if (check == true) {
           if (currentuser.password == password) {
 					outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
+          document.getElementById("loginForm").reset();
           document.getElementById("output").innerHTML = outputresult;
           $('#confirmModal').modal('show');
           }
@@ -294,6 +295,7 @@ document.getElementById('signin').onclick = function() {
 
 				else {
 					signIn("employee");
+          document.getElementById("loginForm").reset();
 				}  
 			}
 
@@ -321,10 +323,12 @@ document.getElementById('signout').onclick = function() {
         checkPresence(); 
         if (check == true) {
           signOut("employee");
+          document.getElementById("loginForm").reset();
         }
 
         else {
           outputresult = "<h3>You have not signed in today. Please sign in first.";
+          document.getElementById("loginForm").reset();
         document.getElementById("output").innerHTML = outputresult;
         $('#confirmModal').modal('show');
         }
@@ -352,12 +356,15 @@ document.getElementById('guestsignin').onclick = function() {
   if (useremail != "" && password != "") {
 		checkPresence(); 
 		if (check == true) {
-          outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
-          document.getElementById("output").innerHTML = outputresult;
-          $('#confirmModal').modal('show');
-          }
-          else {
+      outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
+      document.getElementById("guestloginForm").reset();
+      document.getElementById("output").innerHTML = outputresult;
+      $('#confirmModal').modal('show');
+    }
+
+    else {
 			signIn("guest");
+      document.getElementById("guestloginForm").reset();
 			$('#confirmModal').modal('show');
 		}  
 	}
@@ -376,11 +383,13 @@ document.getElementById('guestsignout').onclick = function() {
     checkPresence(); 
     if (check == true) {
       $('#passcodeModal').modal('show');
+
       document.getElementById('guestcodeconfirm').onclick = function() {
         event.preventDefault();
         outpass = document.getElementById('guestcode').value;
         if (outpass == currentuser.password) {
           signOut("guest");
+          document.getElementById("guestloginForm").reset();
           $('#passcodeModal').modal('hide');
           $('#confirmModal').modal('show');
         }
@@ -395,6 +404,7 @@ document.getElementById('guestsignout').onclick = function() {
 
     else {
       outputresult = "<h3>You have not signed in today. Please sign in first.";
+      document.getElementById("guestloginForm").reset();
       document.getElementById("output").innerHTML = outputresult;
       $('#confirmModal').modal('show');
     }  
