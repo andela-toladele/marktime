@@ -14,3 +14,6 @@ View data for any date.
 
 
 Export data.
+
+
+Email format validation
