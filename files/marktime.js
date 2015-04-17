@@ -266,7 +266,7 @@ document.getElementById('signin').onclick = function() {
 		$('#confirmModal').modal('show');
 };
 
-
+//User sign out
 document.getElementById('signout').onclick = function() {
   event.preventDefault();
   useremail = document.getElementById('useremail').value;
@@ -278,7 +278,13 @@ document.getElementById('signout').onclick = function() {
         checkPresence(); 
         if (check == true) {
           signOut("employee");
-        }  
+        }
+
+        else {
+          outputresult = "<h3>You have not signed in today. Please sign in first.";
+        document.getElementById("output").innerHTML = outputresult;
+        $('#confirmModal').modal('show');
+        }
       }
 
       else {
@@ -340,8 +346,9 @@ document.getElementById('guestsignout').onclick = function() {
       }
     }
 
-    else if (check == false) {
-      signIn("guest");
+    else {
+      outputresult = "<h3>You have not signed in today. Please sign in first.";
+      document.getElementById("output").innerHTML = outputresult;
       $('#confirmModal').modal('show');
     }  
   }

@@ -14,12 +14,12 @@ body {
 
 h1 {
   font-size: 100px;
-  font-family: 'Poiret One', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 h2 {
   font-size: 70px;
-  font-family: 'Poiret One', cursive;
+  font-family: 'Roboto', sans-serif;
 }
 
 table, #confirmModal, #todaysdate2 {
