@@ -28,9 +28,9 @@ function myTimer() {
 
 //Function to save to storage
 var saveToStorage = function () {
-    sessionStorage.setItem("todayscount", JSON.stringify(count));
-    sessionStorage.setItem("todaysarray", JSON.stringify(todaysRegister));
-    sessionStorage.setItem("allEmployees", JSON.stringify(database));
+  sessionStorage.setItem("todayscount", JSON.stringify(count));
+  sessionStorage.setItem("todaysarray", JSON.stringify(todaysRegister));
+  sessionStorage.setItem("allEmployees", JSON.stringify(database));
 };
 
 //Function to retrieve from storage
@@ -92,7 +92,7 @@ document.getElementById('guestback').onclick = function() {
 
 
 
-//Class of one user
+//Use constructor class
 function user (name,email,password) {
 	this.name = name;
 	this.email = email;
@@ -402,7 +402,7 @@ document.getElementById('clear').onclick = function() {
   window.location.reload(true);
 }
 
-
+//On add employee
 document.getElementById('addnow').onclick = function() {
   event.preventDefault();
   employeename = document.getElementById('employeename').value;
@@ -424,7 +424,7 @@ document.getElementById('addnow').onclick = function() {
   document.getElementById('addemployee').style.display = "none";
 };
 
-
+//On remove employee
 document.getElementById('removenow').onclick = function() {
   event.preventDefault();
   removeemail = document.getElementById('employeeemailremove').value;
@@ -445,5 +445,4 @@ document.getElementById('removenow').onclick = function() {
 
   document.getElementById('adminlist').style.display = "block";
   document.getElementById('removeemployee').style.display = "none";
-
 };
