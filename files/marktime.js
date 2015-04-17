@@ -1,7 +1,4 @@
-//Company name
-document.getElementById("companyname").innerHTML = "Andela";
-
-
+window.onload = function() {
 //Current date
 mytime = new Date ();
 
@@ -15,6 +12,18 @@ today = thisday + ", "+ thismonth + " " + mytime.getDate() + ", " + mytime.getFu
 document.getElementById("todaysdate").innerHTML = today;
 document.getElementById("todaysdate2").innerHTML = today;  //date in array
 
+var thishour = mytime.getHours();
+var thisminute = mytime.getMinutes();
+var thisdate = mytime.getDate() + "-" +  mytime.getMonth() + "-" + mytime.getYear();
+if (thishour == 11 && thisminute == 52) {
+    todaysname = thisdate;
+    console.log(todaysname);
+    allDays.todaysname = getFromStorage();
+    sessionStorage.clear();
+    console.log(allDays.todaysname);
+    window.location.reload(true);
+  }
+
 
 //Current time
 var myVar = setInterval(function(){ myTimer() }, 1000);
@@ -24,6 +33,14 @@ function myTimer() {
   var t = d.toLocaleTimeString();
   document.getElementById("currenttime").innerHTML = "<h1>" + t + "</h1>";
 }
+
+
+};
+
+
+//Company name
+document.getElementById("companyname").innerHTML = "Andela";
+
 
 
 //Function to save to storage
@@ -51,7 +68,7 @@ var count = getFromStorage()[0] || 0;
 //Show on load
 var showCount = function () {
   if (count==1) {
-    document.getElementById("counter").innerHTML = "<h4>" + count + " person currently signed in</h4>";
+    document.getElementById("counter").innerHTML = "<h4>" + count + " person is currently signed in</h4>";
   }
 
   else if (isNaN(count)) {
@@ -125,6 +142,8 @@ var timein;
 var currentuser = {};
 var username;
 var useremail;
+var todaysname;
+var allDays = new Object();
 var register = "<thead><tr><th>Name</th><th>Time In</th><th>Time Out</th><th>Category</th></tr></thead><tbody>";
 
 //Function for empty fields
@@ -402,6 +421,8 @@ document.getElementById('clear').onclick = function() {
   window.location.reload(true);
 }
 
+
+
 //On add employee
 document.getElementById('addnow').onclick = function() {
   event.preventDefault();
@@ -446,3 +467,4 @@ document.getElementById('removenow').onclick = function() {
   document.getElementById('adminlist').style.display = "block";
   document.getElementById('removeemployee').style.display = "none";
 };
+
