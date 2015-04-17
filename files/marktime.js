@@ -298,7 +298,7 @@ document.getElementById('signout').onclick = function() {
 };
 
 
-//Guests
+//Guest Sign in
 document.getElementById('guestsignin').onclick = function() {
   event.preventDefault();
 	username = document.getElementById('guestname').value;
@@ -319,7 +319,7 @@ document.getElementById('guestsignin').onclick = function() {
   else  emptyError(); 
 };
 
-
+//Guest Sign out
 document.getElementById('guestsignout').onclick = function() {
   event.preventDefault();
   username = document.getElementById('guestname').value;
@@ -358,12 +358,12 @@ document.getElementById('guestsignout').onclick = function() {
 
 //Populate register
 var displayRegister = function () {
-      register = "";
+  register = "";
 	for (i=0;i<todaysRegister.length;i++) {
     if (todaysRegister[i].timeout == undefined) {
       todaysRegister[i].timeout = "Present";
     }
-      register += "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
+    register += "<tr>" + "<td>" + todaysRegister[i].name + "</td>" + "<td>" + todaysRegister[i].timein + "</td>"+ "<td>" + todaysRegister[i].timeout + "</td>" + "<td>" + todaysRegister[i].type + "</td>" + "</tr></tbody>";
     }
 
 	document.getElementById("todaysregister").innerHTML = "";     //Clear initial register
