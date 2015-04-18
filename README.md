@@ -19,6 +19,19 @@ If you don't have one, you can sign in as a guest or with admin priviledges, add
 Guests will be given a code on sign in which they must use to sign out. This ensures that each guest is unique and avoids false sign outs.
 
 
+#Version 1.1
+Several bug fixes.
+
+
+Email Validation.
+
+
+Human friendly timein and timeout.
+
+
+Several UI changes.
+
+
 #Future Releases
 View data for any date.
 

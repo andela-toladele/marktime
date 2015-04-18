@@ -39,6 +39,9 @@
   <div id="choices">
     <button type="button" class="btn btn-primary" id="staff">Staff Register</button>
     <button type="button" class="btn btn-default" id="guest">Guest Register</button>
+    <div class="row">
+    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target= "#todayModal" id="viewregister">View Today's Register</button>
+  </div>
   </div>
 
   <!--Sign In Form-->
@@ -152,9 +155,6 @@
   <!-- Confirmation Modal end-->
 
 
-  <div id="counter"></div>
-  <button type="button" class="btn btn-primary"  data-toggle="modal" data-target= "#todayModal" id="viewregister">View Today's Register</button>
-
   <!--View Register modal-->
   <div class="modal fade" id="todayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -164,6 +164,7 @@
         </div>
         <div class="modal-body">
         <h3><span id="todaysdate2"></span></h3>
+        <div id="counter"></div>
         <table class="table table-striped" id="todaysregister"></table>
       </div>
       </div>

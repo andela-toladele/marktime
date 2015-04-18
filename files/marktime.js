@@ -350,10 +350,10 @@ document.getElementById('guestsignout').onclick = function() {
           outpass = document.getElementById('guestcode').value;
           if (outpass == currentuser.password) {
             signOut("guest");
-            document.getElementById("guestpassForm").reset();
-            document.getElementById("guestloginForm").reset();
             $('#passcodeModal').modal('hide');
             $('#confirmModal').modal('show');
+            document.getElementById("guestpassForm").reset();
+            document.getElementById("guestloginForm").reset();
             document.getElementById('choices').style.display = "block";
             document.getElementById('guestlogin').style.display = "none";
 
@@ -365,6 +365,7 @@ document.getElementById('guestsignout').onclick = function() {
           else {
             $('#passcodeModal').modal('hide');
             outputresult = "<h3>Passcode Invalid. Please try again.";
+            document.getElementById("guestpassForm").reset();
             document.getElementById("output").innerHTML = outputresult;
             $('#confirmModal').modal('show');
 
@@ -374,6 +375,10 @@ document.getElementById('guestsignout').onclick = function() {
           }
         }
       }
+
+      $('#passcodeModal').on('hidden.bs.modal', function () {
+        document.getElementById("guestpassForm").reset();
+      })
     }
 
     else if (check == true && currentuser.status == "Absent") {

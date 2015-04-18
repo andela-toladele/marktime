@@ -39,7 +39,7 @@ div#currenttime h1 {
 }
 
 #counter {
-  margin: 30px;
+  margin: 25px;
 }
 
 #askuser {
@@ -48,6 +48,10 @@ div#currenttime h1 {
 
 .next-line {
   margin-top: 15px;
+}
+
+#viewregister {
+  margin-top: 50px;
 }
 
 ul#adminlist {
