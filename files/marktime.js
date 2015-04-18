@@ -13,7 +13,7 @@ document.getElementById("todaysdate2").innerHTML = today;  //date in array
 
 
 //Current time
-var myVar = setInterval(function(){ myTimer(); }, 1000);
+var myVar = setInterval(function () {myTimer();}, 1000);
 
 function myTimer() {
   var d = new Date();
@@ -73,22 +73,29 @@ var decreaseCounter = function () {
   showCount();  
 };
 
+//Option to sign in as a staff
+document.getElementById('staff').onclick = function() {
+  document.getElementById('choices').style.display = "none";
+  document.getElementById('login').style.display = "block";
+};
+
 //Option to sign in as a guest
 document.getElementById('guest').onclick = function() {
-  document.getElementById('login').style.display = "none";
+  document.getElementById('choices').style.display = "none";
   document.getElementById('guestlogin').style.display = "block";
-  document.getElementById('askguest').style.display = "none";
-  document.getElementById('guestback').style.display = "block";
 };
 
-//Go back on cancel
+//Go back on cancel guest
 document.getElementById('guestback').onclick = function() {
-  document.getElementById('login').style.display = "block";
+  document.getElementById('choices').style.display = "block";
   document.getElementById('guestlogin').style.display = "none";
-  document.getElementById('askguest').style.display = "block";
-  document.getElementById('guestback').style.display = "none";
 };
 
+//Go back on cancel staff
+document.getElementById('staffback').onclick = function() {
+  document.getElementById('choices').style.display = "block";
+  document.getElementById('login').style.display = "none";
+};
 
 
 
@@ -107,15 +114,7 @@ var ejiro = new user("Ejiro Winifred", "ejiro@andela.co", "ejiro", "080123456");
 
 
 //An array for everybody
-var database;
-
-if (getFromStorage()[2] == null) {
-  database = [jide,ejiro,musk];
-}
-
-else {
-  database = [jide,ejiro,musk];
-}
+var database = getFromStorage()[2] || [jide,ejiro,musk];
 
 //My variables
 var outputresult;
@@ -130,8 +129,7 @@ var useremail;
 var todaysname;
 var allDays = new Object();
 var register;
-var timein = [];
-var timeout = [];
+var timeout;
 
 //Function for empty fields
 var emptyError = function () {
@@ -183,23 +181,7 @@ var wrongInfoError = function () {
 //Function to sign in
 var signIn = function (type) {
   now = new Date();
-  if (now.getHours() <10) {
-    timein[0] = "0" + now.getHours();
-  }
-
-  else {
-    timein[0] = now.getHours();
-  }
-
-  if (now.getMinutes() <10) {
-    timein[1] = "0" + now.getMinutes();
-  }
-
-  else {
-    timein[1] = now.getMinutes();
-  }
-
-  currentuser.timein = timein[0] + ":" + timein[1];
+  currentuser.timein = now.toLocaleTimeString(navigator.lanaguage, {hour:'2-digit', minute:'2-digit'});
   currentuser.latestStateChangeDay = mytime.getDate();
   currentuser.latestStateChange = currentuser.timein;
   currentuser.status = "Present";
@@ -215,7 +197,6 @@ var signIn = function (type) {
     currentuser.password = Math.floor(Math.random() * 10000);
     outputresult = "<h2> Welcome "+ currentuser.name +". </h2></br><h3> You signed in at " + currentuser.timein + "</br>Your passcode is <b>" + currentuser.password + "</b>. Please record this number as you will need it to sign out</h3>";
   }
-  currentuser.usercount++;
   todaysRegister.push(currentuser);
   updateCounter();
   saveToStorage();
@@ -241,25 +222,8 @@ var signOut = function (type) {
   correctPass = false;
   checkPresence();
   now = new Date();
+  currentuser.timeout = now.toLocaleTimeString(navigator.lanaguage, {hour:'2-digit', minute:'2-digit'});
   currentuser.status = "Absent";
-
-  if (now.getHours() <10) {
-    timeout[0] = "0" + now.getHours();
-  }
-
-  else {
-    timeout[0] = now.getHours();
-  }
-
-  if (now.getMinutes() <10) {
-    timeout[1] = "0" + now.getMinutes();
-  }
-
-  else {
-    timeout[1] = now.getMinutes();
-  }
-
-  currentuser.timeout = timeout[0] + ":" + timeout[1];
   currentuser.latestStateChangeDay = mytime.getDate();
   currentuser.latestStateChange = currentuser.timeout;
   decreaseCounter();
@@ -273,144 +237,157 @@ var signOut = function (type) {
 
 //User Sign in
 document.getElementById('signin').onclick = function() {
-  event.preventDefault();
-  useremail = document.getElementById('useremail').value;
-  password = document.getElementById('password').value;
-  currentuser = {};
-    if (useremail != "" && password != "") {
-      checkDatabase();
-      if (currentuser.email != undefined) {
-        checkPresence(); 
-        if (check == true) {
-          if (currentuser.password == password) {
-          outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
-          document.getElementById("loginForm").reset();
-          document.getElementById("output").innerHTML = outputresult;
-          $('#confirmModal').modal('show');
-          }
-          else {
-            wrongInfoError();
-          }
+  if ($('#loginForm')[0].checkValidity()) {
+    event.preventDefault();
+    useremail = document.getElementById('useremail').value;
+    password = document.getElementById('password').value;
+    currentuser = {};
+    checkDatabase();
+    if (currentuser.email != undefined) {
+      checkPresence(); 
+      if (check == true && currentuser.status == "Present") {
+        if (currentuser.password == password) {
+        outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
+        document.getElementById("output").innerHTML = outputresult;
+        $('#confirmModal').modal('show');
         }
-
         else {
-          signIn("employee");
-          document.getElementById("loginForm").reset();
-        }  
+          wrongInfoError();
+        }
       }
 
       else {
-        wrongInfoError();
-      }
+        signIn("employee");
+        document.getElementById("loginForm").reset();
+        document.getElementById('choices').style.display = "block";
+        document.getElementById('login').style.display = "none";
+      }  
     }
 
     else {
-      emptyError();
+      wrongInfoError();
     }
 
-    $('#confirmModal').modal('show');
+      $('#confirmModal').modal('show');
+  }
 };
 
 //User sign out
 document.getElementById('signout').onclick = function() {
-  event.preventDefault();
-  useremail = document.getElementById('useremail').value;
-  password = document.getElementById('password').value;
-  currentuser = {};
-    if (useremail != "" && password != "") {
-      checkDatabase();
-      if (currentuser.email != undefined) {
-        checkPresence(); 
-        if (check == true) {
-          signOut("employee");
-          document.getElementById("loginForm").reset();
-        }
+  if ($('#loginForm')[0].checkValidity()) {
+    event.preventDefault();
+    useremail = document.getElementById('useremail').value;
+    password = document.getElementById('password').value;
+    currentuser = {};
+    checkDatabase();
+    if (currentuser.email != undefined) {
+      checkPresence(); 
+      if (check == true && currentuser.status == "Present") {
+        signOut("employee");
+        document.getElementById("loginForm").reset();
+        document.getElementById('choices').style.display = "block";
+        document.getElementById('login').style.display = "none";
+      }
 
-        else {
-          outputresult = "<h3>You have not signed in today. Please sign in first.";
-          document.getElementById("loginForm").reset();
+      else if (check == true && currentuser.status == "Absent") {
+        outputresult = "<h3>You have already signed out today. Please sign in again.";
         document.getElementById("output").innerHTML = outputresult;
-        $('#confirmModal').modal('show');
-        }
       }
 
       else {
-        wrongInfoError();
+        outputresult = "<h3>You have not signed in today. Please sign in first.";
+        document.getElementById("output").innerHTML = outputresult;
       }
     }
 
     else {
-      emptyError();
+      wrongInfoError();
     }
 
-    $('#confirmModal').modal('show');
+  $('#confirmModal').modal('show');
+  }
 };
 
 
 //Guest Sign in
 document.getElementById('guestsignin').onclick = function() {
-  event.preventDefault();
-  username = document.getElementById('guestname').value;
-  useremail = document.getElementById('guestemail').value;
-  currentuser = {};
-  if (useremail != "" && password != "") {
+  if ($('#guestloginForm')[0].checkValidity()) {
+    event.preventDefault();
+    username = document.getElementById('guestname').value;
+    useremail = document.getElementById('guestemail').value;
+    currentuser = {};
     checkPresence(); 
-    if (check == true) {
+    if (check == true && currentuser.status == "Present") {
       outputresult = "<h2>Hello " + currentuser.name + ". " + "</h2><h3>You already signed in at " + currentuser.timein + "</h3>";
-      document.getElementById("guestloginForm").reset();
       document.getElementById("output").innerHTML = outputresult;
-      $('#confirmModal').modal('show');
     }
 
     else {
       signIn("guest");
       document.getElementById("guestloginForm").reset();
-      $('#confirmModal').modal('show');
+      document.getElementById('choices').style.display = "block";
+      document.getElementById('guestlogin').style.display = "none";
     }  
-  }
-  else {
-    emptyError();
+
+    $('#confirmModal').modal('show');
   }
 };
 
 //Guest Sign out
 document.getElementById('guestsignout').onclick = function() {
-  event.preventDefault();
-  username = document.getElementById('guestname').value;
-  useremail = document.getElementById('guestemail').value;
-  currentuser = {};
-  if (useremail != "" && password != "") {
+  if ($('#guestloginForm')[0].checkValidity()) {
+    event.preventDefault();
+    username = document.getElementById('guestname').value;
+    useremail = document.getElementById('guestemail').value;
+    currentuser = {};
     checkPresence(); 
-    if (check == true) {
+    if (check == true && currentuser.status == "Present") {
       $('#passcodeModal').modal('show');
 
       document.getElementById('guestcodeconfirm').onclick = function() {
-        event.preventDefault();
-        outpass = document.getElementById('guestcode').value;
-        if (outpass == currentuser.password) {
-          signOut("guest");
-          document.getElementById("guestloginForm").reset();
-          $('#passcodeModal').modal('hide');
-          $('#confirmModal').modal('show');
-        }
+        if ($('#guestpassForm')[0].checkValidity()) {
+          event.preventDefault();
+          outpass = document.getElementById('guestcode').value;
+          if (outpass == currentuser.password) {
+            signOut("guest");
+            document.getElementById("guestpassForm").reset();
+            document.getElementById("guestloginForm").reset();
+            $('#passcodeModal').modal('hide');
+            $('#confirmModal').modal('show');
+            document.getElementById('choices').style.display = "block";
+            document.getElementById('guestlogin').style.display = "none";
 
-        else {
-          $('#passcodeModal').modal('hide');
-          wrongInfoError();
-          $('#confirmModal').modal('show');
+            $('#confirmModal').on('hidden.bs.modal', function () {
+               $('#passcodeModal').modal('hide');
+            })
+          }
+
+          else {
+            $('#passcodeModal').modal('hide');
+            outputresult = "<h3>Passcode Invalid. Please try again.";
+            document.getElementById("output").innerHTML = outputresult;
+            $('#confirmModal').modal('show');
+
+            $('#confirmModal').on('hidden.bs.modal', function () {
+               $('#passcodeModal').modal('show');
+            })
+          }
         }
       }
     }
 
-    else {
-      outputresult = "<h3>You have not signed in today. Please sign in first.";
-      document.getElementById("guestloginForm").reset();
+    else if (check == true && currentuser.status == "Absent") {
+      outputresult = "<h3>You have already signed out today. Please sign in again.";
       document.getElementById("output").innerHTML = outputresult;
       $('#confirmModal').modal('show');
-    }  
-  }
-  else {
-    emptyError();
+    }
+
+    else {
+      outputresult = "<h3>You have not signed in today. Please sign in first.";
+      document.getElementById("output").innerHTML = outputresult;
+      $('#confirmModal').modal('show');
+    }
+
   }
 };
 

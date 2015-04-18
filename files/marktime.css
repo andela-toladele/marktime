@@ -38,6 +38,18 @@ div#currenttime h1 {
   color:white;
 }
 
+#counter {
+  margin: 30px;
+}
+
+#askuser {
+  margin-top: 20px;
+}
+
+.next-line {
+  margin-top: 15px;
+}
+
 ul#adminlist {
   display: inline;
 }

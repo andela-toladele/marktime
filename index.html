@@ -25,7 +25,6 @@
     <div id="navbarCollapse" class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" data-toggle="modal" data-target= "#adminModal" id="viewadmin">Admin</a></li>
-        <li><a href="#" data-toggle="modal" data-target= "#todayModal" id="viewregister">View Register</a></li>
       </ul>
     </div>
   </nav>
@@ -37,24 +36,37 @@
   <h3 class="homecolor"> Today is <span id="todaysdate"></span></h3>
   <div id="currenttime"></div>
 
+  <div id="choices">
+    <button type="button" class="btn btn-primary" id="staff">Staff Register</button>
+    <button type="button" class="btn btn-default" id="guest">Guest Register</button>
+  </div>
 
   <!--Sign In Form-->
-  <div id ="login">
+  <div id ="login" style="display:none">
     <form id="loginForm" method="post" class="form-inline">
-      <div class="form-group">
-        <div>
-          <input type="email" class="form-control" name="useremail" placeholder="Company Email Address" id="useremail"/>
+      <div class="row">
+        <div class="form-group">
+          <div>
+            <input type="email" class="form-control" name="useremail" placeholder="Company Email Address" id="useremail" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <input type="password" class="form-control" name="password" placeholder="Password" id="password" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <button type="submit" class="btn btn-default" id="staffback">Back</button>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <div>
-          <input type="password" class="form-control" name="password" placeholder="Password" id="password"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <button type="submit" class="btn btn-primary" id="signin">Sign In</button>
-          <button type="submit" class="btn btn-default" id="signout">Sign Out</button>
+      <div class="row">
+        <div class="form-group">
+          <div class="next-line">
+            <button type="submit" class="btn btn-primary" id="signin">Sign In</button>
+            <button type="submit" class="btn btn-default" id="signout">Sign Out</button>
+          </div>
         </div>
       </div>
     </form>
@@ -65,31 +77,34 @@
   <!--Guest Sign In Form-->
   <div id="guestlogin" style="display:none">
     <form id="guestloginForm" method="post" class="form-inline">
-      <div class="form-group">
-        <div>
-          <input type="text" class="form-control" name="guestname" placeholder="Your Name" id="guestname"/>
+      <div class="row">
+        <div class="form-group">
+          <div>
+            <input type="text" class="form-control" name="guestname" placeholder="Your Name" id="guestname" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <input type="email" class="form-control" name="guestemail" placeholder="Your Email Address" id="guestemail" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <button type="button" class="btn btn-default" id="guestback">Back</button>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <div>
-          <input type="email" class="form-control" name="guestemail" placeholder="Your Email Address" id="guestemail"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div>
-          <button type="submit" class="btn btn-primary" id="guestsignin">Sign In</button>
-          <button type="submit" class="btn btn-default" id="guestsignout">Sign Out</button>
-        </div>
-      </div>
-      <div class="form-group">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="guestback">Cancel</button>
+      <div class="row">
+        <div class="form-group">
+          <div class="next-line">
+            <button type="submit" class="btn btn-primary" id="guestsignin">Sign In</button>
+            <button type="submit" class="btn btn-default" id="guestsignout">Sign Out</button>
+          </div>
         </div>
       </div>
     </form>
   </div>
   <!--Guest Sign In Form end-->
-
-  <p id="askguest">Don't have a company email address? <a href="#" id="guest">Sign In as a guest</a></p>
   </div>
   </div>
   <!--Form Div end-->
@@ -100,7 +115,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="confirmclose"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body" id="output"></div>
       </div>
@@ -119,7 +134,7 @@
           <form id="guestpassForm" method="post" class="form-inline">
               <div class="form-group">
                   <div>
-                      <input type="password" class="form-control" name="guestcode" placeholder="Passcode" id="guestcode"/>
+                      <input type="password" class="form-control" name="guestcode" placeholder="Passcode" id="guestcode" required/>
                   </div>
               </div>
 
@@ -138,6 +153,7 @@
 
 
   <div id="counter"></div>
+  <button type="button" class="btn btn-primary"  data-toggle="modal" data-target= "#todayModal" id="viewregister">View Today's Register</button>
 
   <!--View Register modal-->
   <div class="modal fade" id="todayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -179,12 +195,12 @@
       </div>
       <div class="form-group">
         <div>
-          <input type="text" class="form-control" name="employeeemail" placeholder="Employee Email" id="employeeemail"/>
+          <input type="email" class="form-control" name="employeeemail" placeholder="Employee Email" id="employeeemail"/>
         </div>
       </div>
       <div class="form-group">
         <div>
-          <input type="text" class="form-control" name="employeepass" placeholder="Employee Password" id="employeepass"/>
+          <input type="password" class="form-control" name="employeepass" placeholder="Employee Password" id="employeepass"/>
         </div>
       </div>
       <div class="form-group">
