@@ -22,6 +22,12 @@ h2 {
   font-family: 'Roboto', sans-serif;
 }
 
+.intro {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 20px;
+}
+
 .homecolor {
   color: white;
 }
